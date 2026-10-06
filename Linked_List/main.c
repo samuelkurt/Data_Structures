@@ -36,10 +36,11 @@ int main(void) {
     printf("Popped: %.2f\n", ll_pop(&head));
     printf("head = %p\n", (void *)head);
 
-    printf("\n=== Test 5: add ===\n");
-    ll_add(&head, 10.5);
-    ll_add(&head, 11.5);
-    printf("Popped: %.2f\n", ll_pop(&head));
-    printf("Popped: %.2f\n", ll_pop(&head));
+    printf("\n=== Test 5: pop_at_end ===\n");
+    ll_push(&head, 30.5);
+    ll_push(&head, 30);
+    ll_push(&head, 99);
+    printf("Popped: %.2f\n", ll_pop_end(&head));
+    printf("Popped: %.2f\n", ll_pop_end(&head));
     return 0;
 }

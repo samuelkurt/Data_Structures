@@ -27,7 +27,7 @@ double ll_pop(NODE_t **list) {
     return value;
 }
 
-void ll_end(NODE_t **list, double a) {
+void ll_push_end(NODE_t **list, double a) {
     NODE_t *node = malloc(sizeof *node);
     if (node == NULL) {
         perror("malloc");
@@ -44,4 +44,23 @@ void ll_end(NODE_t **list, double a) {
         current = current->next;
     }
     current->next = node;
+}
+
+double ll_pop_end(NODE_t **list) {
+    if (*list == NULL) {
+        return NAN;
+    }
+    NODE_t *node = *list;
+    NODE_t *prev = NULL;
+    while (node->next != NULL) {
+        prev = node;
+        node = node->next;
+    }
+    double value = node->d;
+    if (prev == NULL) {
+        *list = NULL;
+    } else {
+        prev->next = NULL;
+    }
+    free(node);
 }

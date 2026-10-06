@@ -8,5 +8,6 @@ typedef struct NODE_t {
 
 void ll_push(NODE_t **list, double a);
 double ll_pop(NODE_t **list);
-void ll_end(NODE_t **list, double a);
+void ll_push_end(NODE_t **list, double a);
+double ll_pop_end(NODE_t **list);
 #endif
