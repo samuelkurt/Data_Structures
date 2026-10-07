@@ -40,7 +40,22 @@ int main(void) {
     ll_push(&head, 30.5);
     ll_push(&head, 30);
     ll_push(&head, 99);
-    printf("Popped: %.2f\n", ll_pop_end(&head));
-    printf("Popped: %.2f\n", ll_pop_end(&head));
+    printf("Popped: %f\n", ll_pop_end(&head));
+    printf("Popped: %f\n", ll_pop_end(&head));
+
+    printf("\n=== Test 6: ll_find_num ===\n");
+    ll_push(&head, 10.5);
+    ll_push(&head, 30);
+    ll_push(&head, 99);
+    printf("Popped: %p\n", ll_find_num(&head, 10.5));
+
+    printf("\n=== Test 7: ll_del_num ===\n");
+    ll_push(&head, 10.5);
+    ll_push(&head, 30);
+    ll_push(&head, 99);
+    printf("Popped: %p\n", ll_del_num(&head, 1));
+    printf("Popped: %.2f\n", ll_pop(&head));
+    printf("Popped: %.2f\n", ll_pop(&head));
+    printf("Popped: %.2f\n", ll_pop(&head));
     return 0;
 }

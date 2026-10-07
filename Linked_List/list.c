@@ -62,5 +62,50 @@ double ll_pop_end(NODE_t **list) {
     } else {
         prev->next = NULL;
     }
+    return value;
+    free(node);
+}
+
+NODE_t *ll_find_num(NODE_t **list, const double d) {
+    if (*list == NULL) {
+        return NULL;
+    }
+    NODE_t *node = *list;
+    NODE_t *prev = NULL;
+    while (node->next != NULL && node->d != d) {
+        prev = node;
+        node = node->next;
+    }
+    if (prev == NULL) {
+        *list = NULL;
+    } else {
+        prev->next = NULL;
+    }
+    return prev;
+    free(node);
+}
+
+NODE_t *ll_del_num(NODE_t **list, const int d) {
+    if (*list == NULL) {
+        return NULL;
+    }
+    NODE_t *node = *list;
+    NODE_t *prev = NULL;
+    NODE_t *next = NULL;
+    int i = 0;
+    while (node != NULL && i != d) {
+        prev = node;
+        node = node->next;
+        next = node->next;
+        i++;
+    }
+    if (node == NULL) {
+        return NULL;
+    }
+    if (prev == NULL) {
+        *list = node->next;
+    } else {
+        prev = next->next;
+    }
     free(node);
 }
