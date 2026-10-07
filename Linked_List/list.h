@@ -12,5 +12,6 @@ void    ll_push_end(NODE_t **head, double value);
 double ll_pop_end(NODE_t **list);
 NODE_t *ll_find_num(NODE_t **list, const double d);
 NODE_t *ll_del_num(NODE_t **list, const int d);
+NODE_t *ll_clear(NODE_t **list);
 
 #endif

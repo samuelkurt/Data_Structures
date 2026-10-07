@@ -62,8 +62,8 @@ double ll_pop_end(NODE_t **list) {
     } else {
         prev->next = NULL;
     }
-    return value;
     free(node);
+    return value;
 }
 
 NODE_t *ll_find_num(NODE_t **list, const double d) {
@@ -76,13 +76,7 @@ NODE_t *ll_find_num(NODE_t **list, const double d) {
         prev = node;
         node = node->next;
     }
-    if (prev == NULL) {
-        *list = NULL;
-    } else {
-        prev->next = NULL;
-    }
     return prev;
-    free(node);
 }
 
 NODE_t *ll_del_num(NODE_t **list, const int d) {
@@ -105,7 +99,25 @@ NODE_t *ll_del_num(NODE_t **list, const int d) {
     if (prev == NULL) {
         *list = node->next;
     } else {
-        prev = next->next;
+        prev->next = next;
     }
     free(node);
+}
+
+NODE_t *ll_clear(NODE_t **list) {
+    if (*list == NULL) {
+        return NULL;
+    }
+    NODE_t *node = *list;
+    NODE_t *prev = NULL;
+    int i = 0;
+    while (node != NULL) {
+        prev = node;
+        node = node->next;
+        i++;
+        free(prev);
+    }
+    if (node == NULL) {
+        return NULL;
+    }
 }
