@@ -72,7 +72,7 @@ NODE_t *ll_find_num(NODE_t **list, const double d) {
     }
     NODE_t *node = *list;
     NODE_t *prev = NULL;
-    while (node->next != NULL && node->d != d) {
+    while (node != NULL && node->d != d) {
         prev = node;
         node = node->next;
     }
@@ -85,12 +85,10 @@ NODE_t *ll_del_num(NODE_t **list, const int d) {
     }
     NODE_t *node = *list;
     NODE_t *prev = NULL;
-    NODE_t *next = NULL;
     int i = 0;
     while (node != NULL && i != d) {
         prev = node;
         node = node->next;
-        next = node->next;
         i++;
     }
     if (node == NULL) {
@@ -99,9 +97,10 @@ NODE_t *ll_del_num(NODE_t **list, const int d) {
     if (prev == NULL) {
         *list = node->next;
     } else {
-        prev->next = next;
+        prev->next = node->next;
     }
     free(node);
+    return node;
 }
 
 NODE_t *ll_clear(NODE_t **list) {
@@ -109,15 +108,40 @@ NODE_t *ll_clear(NODE_t **list) {
         return NULL;
     }
     NODE_t *node = *list;
-    NODE_t *prev = NULL;
-    int i = 0;
     while (node != NULL) {
-        prev = node;
-        node = node->next;
-        i++;
-        free(prev);
+        NODE_t *next = node->next;
+        free(node);
+        node = next;
     }
-    if (node == NULL) {
+    *list = NULL;
+    return NULL;
+}
+
+double* ll_export(NODE_t **list) {
+    if (*list == NULL) {
         return NULL;
     }
+    NODE_t *node = *list;
+    int count = 0;
+    while (node != NULL) {
+        node = node->next;
+        count++;
+    }
+    double *values = (double *)malloc(count * sizeof(double));
+    if (values == NULL) {
+        return NULL;
+    }
+    node = *list;
+    int i = 0;
+    while (node != NULL) {
+        values[i] = node->d;
+        NODE_t *temp = node;
+        node = node->next;
+        free(temp);
+        i++;
+    }
+    *list = NULL;
+
+    return values;
 }
+
