@@ -8,7 +8,7 @@
 int main(void) {
     NODE_t *head = NULL;
 
-    printf("\nTest 2: Push values\n");
+    printf("\nTest 1: Push values\n");
 
     ll_push(&head, 10.5);
     printf("Pushed 10.5\n");
@@ -24,18 +24,18 @@ int main(void) {
 
     printf("head = %p\n", (void *)head);
 
-    printf("\nTest 3: Pop values\n");
+    printf("\nTest 2: Pop values\n");
 
     printf("Popped: %.2f\n", ll_pop(&head));
     printf("Popped: %.2f\n", ll_pop(&head));
     printf("Popped: %.2f\n", ll_pop(&head));
     printf("Popped: %.2f\n", ll_pop(&head));
 
-    printf("\nTest 4: Empty List\n");
+    printf("\nTest 3: Empty List\n");
     printf("Popped: %.2f\n", ll_pop(&head));
     printf("head = %p\n", (void *)head);
 
-    printf("\nTest 5: pop_at_end\n");
+    printf("\nTest 4: pop_at_end\n");
     ll_push(&head, 30.5);
     ll_push(&head, 30);
     ll_push(&head, 99);
@@ -44,7 +44,7 @@ int main(void) {
     printf("Popped: %f\n", ll_pop_end(&head));
     printf("Popped: %f\n", ll_pop_end(&head));
 
-    printf("\nTest 6: ll_find_num\n");
+    printf("\nTest 5: ll_find_num\n");
     ll_push(&head, 10.5);
     ll_push(&head, 30);
     ll_push(&head, 99);
@@ -52,7 +52,7 @@ int main(void) {
     ll_clear(&head);
     printf("Popped: %.2f\n", ll_pop(&head));
 
-    printf("\nTest 7: ll_del_num\n");
+    printf("\nTest 6: ll_del_num\n");
     ll_push(&head, 10.5);
     ll_push(&head, 30);
     ll_push(&head, 99);
@@ -61,7 +61,7 @@ int main(void) {
     printf("Popped: %.2f\n", ll_pop(&head));
     printf("Popped: %.2f\n", ll_pop(&head));
 
-    printf("\nTest 8: ll_export\n");
+    printf("\nTest 7: ll_export\n");
     ll_push(&head, 10.5);
     ll_push(&head, 20.5);
     ll_push(&head, 30.5);
@@ -79,7 +79,7 @@ int main(void) {
         printf("Failed to export values.\n");
     }
 
-    printf("\nTest 9: Benchmark\n");
+    printf("\nTest 8: Benchmark\n");
     printf("push\n");
     long start = clock();
     int const MAX_I = 100000;
