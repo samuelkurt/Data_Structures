@@ -68,7 +68,7 @@ NODE_t *ll_find_num(NODE_t *list, double d) {
     if (list == NULL) {
         return NULL;
     }
-    NODE_t *node = &*list;
+    NODE_t *node = list;
     while (node != NULL && node->d != d) {
         node = node->next;
     }
@@ -101,7 +101,7 @@ int ll_del_index(NODE_t **list, uint32_t d) {
 
 void ll_clear(NODE_t **list) {
     if (*list == NULL) {
-
+        return;
     }
     NODE_t *node = *list;
     while (node != NULL) {
@@ -128,7 +128,7 @@ double* ll_export(NODE_t **list, uint32_t* count) {
         return NULL;
     }
     node = *list;
-    int i = 0;
+    uint32_t i = 0;
     while (node != NULL) {
         values[i] = node->d;
         node = node->next;

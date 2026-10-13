@@ -97,7 +97,7 @@ int main(void) {
     ll_clear(&head);
     printf("Popped: %.2f\n", ll_pop(&head));
 
-    printf("\nTest 7: ll_del_num\n");
+    printf("\nTest 7: ll_del_index\n");
     printf("Deleted: %d\n", ll_del_index(&head, 0));
     ll_push(&head, 10.5);
     ll_push(&head, 30);
