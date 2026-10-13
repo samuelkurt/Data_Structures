@@ -75,7 +75,7 @@ NODE_t *ll_find_num(NODE_t **list, double d) {
     return node;
 }
 
-uint32_t ll_del_num(NODE_t **list, uint32_t d) {
+int ll_del_num(NODE_t **list, uint32_t d) {
     if (*list == NULL) {
         return -1;
     }
