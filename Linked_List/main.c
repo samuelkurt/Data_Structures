@@ -39,8 +39,6 @@ int main(void) {
     printf("Pushed 40.5\n");
     print_list(&head);
 
-    printf("head = %p\n", (void *)head);
-
     printf("\nTest 2: Pop values\n");
 
     printf("Popped: %.2f\n", ll_pop(&head));
