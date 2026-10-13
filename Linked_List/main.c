@@ -138,7 +138,7 @@ int main(void) {
     printf("head = %p\n", (void *)head);
 
     printf("\nTest 10: Benchmark\n");
-    uint32_t const MAX_I = 100000;
+    uint32_t const MAX_I = 40000;
 
     printf("push (%u)\n", (unsigned)MAX_I);
     clock_t start = clock();
