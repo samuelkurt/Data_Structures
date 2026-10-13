@@ -1,8 +1,6 @@
+#include "list.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdint.h>
-#include "list.h"
-
 #include <math.h>
 
 void ll_push(NODE_t **list, double a) {
@@ -66,7 +64,7 @@ double ll_pop_end(NODE_t **list) {
     return value;
 }
 
-NODE_t *ll_find_num(NODE_t **list, const double d) {
+NODE_t *ll_find_num(NODE_t **list, double d) {
     if (*list == NULL) {
         return NULL;
     }
@@ -77,13 +75,13 @@ NODE_t *ll_find_num(NODE_t **list, const double d) {
     return node;
 }
 
-int ll_del_num(NODE_t **list, const uint32_t d) {
+uint32_t ll_del_num(NODE_t **list, uint32_t d) {
     if (*list == NULL) {
         return -1;
     }
     NODE_t *node = *list;
     NODE_t *prev = NULL;
-    int i = 0;
+    uint32_t i = 0;
     while (node != NULL && i != d) {
         prev = node;
         node = node->next;
@@ -133,7 +131,6 @@ double* ll_export(NODE_t **list, uint32_t* count) {
     int i = 0;
     while (node != NULL) {
         values[i] = node->d;
-        NODE_t *temp = node;
         node = node->next;
         i++;
     }

@@ -1,10 +1,8 @@
+#include "list.h"
+#include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdint.h>
-#include <time.h>
-#include <math.h>
 
-#include "list.h"
 
 static void print_list(NODE_t **head) {
     uint32_t length = 0;
@@ -142,8 +140,7 @@ int main(void) {
     printf("head = %p\n", (void *)head);
 
     printf("\nTest 10: Benchmark\n");
-    uint32_t const MAX_I = 1000000;
-    uint32_t const MAX_N = 20000;
+    uint32_t const MAX_I = 100000;
 
     printf("push (%u)\n", (unsigned)MAX_I);
     clock_t start = clock();
@@ -161,17 +158,17 @@ int main(void) {
     end = clock();
     printf("time (s): %f\n", (double)(end - start) / CLOCKS_PER_SEC);
 
-    printf("push_end (%u)\n", (unsigned)MAX_N);
+    printf("push_end (%u)\n", (unsigned)MAX_I);
     start = clock();
-    for (uint32_t i = 0; i < MAX_N; i++) {
+    for (uint32_t i = 0; i < MAX_I; i++) {
         ll_push_end(&head, i);
     }
     end = clock();
     printf("time (s): %f\n", (double)(end - start) / CLOCKS_PER_SEC);
 
-    printf("pop_end (%u)\n", (unsigned)MAX_N);
+    printf("pop_end (%u)\n", (unsigned)MAX_I);
     start = clock();
-    for (uint32_t i = 0; i < MAX_N; i++) {
+    for (uint32_t i = 0; i < MAX_I; i++) {
         ll_pop_end(&head);
     }
     end = clock();
@@ -179,22 +176,22 @@ int main(void) {
 
     printf("repopulating, please wait...\n");
 
-    for (uint32_t i = 0; i < MAX_N; i++) {
+    for (uint32_t i = 0; i < MAX_I; i++) {
         ll_push(&head, i);
     }
 
-    printf("find_middle (%u)\n", (unsigned)MAX_N);
+    printf("find_middle (%u)\n", (unsigned)MAX_I);
     start = clock();
-    for (uint32_t i = 0; i < MAX_N; i++) {
-        ll_find_num(&head, MAX_N / 2);
+    for (uint32_t i = 0; i < MAX_I; i++) {
+        ll_find_num(&head, MAX_I / 2);
     }
     end = clock();
     printf("time (s): %f\n", (double)(end - start) / CLOCKS_PER_SEC);
 
-    printf("del_middle (%u)\n", (unsigned)MAX_N);
+    printf("del_middle (%u)\n", (unsigned)MAX_I);
     start = clock();
-    for (uint32_t i = 0; i < MAX_N; i++) {
-        ll_del_num(&head, (MAX_N - i) / 2);
+    for (uint32_t i = 0; i < MAX_I; i++) {
+        ll_del_num(&head, (MAX_I - i) / 2);
     }
     end = clock();
     printf("time (s): %f\n", (double)(end - start) / CLOCKS_PER_SEC);
