@@ -77,7 +77,7 @@ NODE_t *ll_find_num(NODE_t **list, const double d) {
     return node;
 }
 
-int ll_del_num(NODE_t **list, const int d) {
+int ll_del_num(NODE_t **list, const uint32_t d) {
     if (*list == NULL) {
         return -1;
     }
@@ -101,9 +101,9 @@ int ll_del_num(NODE_t **list, const int d) {
     return 0;
 }
 
-NODE_t *ll_clear(NODE_t **list) {
+void ll_clear(NODE_t **list) {
     if (*list == NULL) {
-        return NULL;
+
     }
     NODE_t *node = *list;
     while (node != NULL) {
@@ -112,11 +112,11 @@ NODE_t *ll_clear(NODE_t **list) {
         node = next;
     }
     *list = NULL;
-    return NULL;
 }
 
-double* ll_export(NODE_t **list, int* count) {
+double* ll_export(NODE_t **list, uint32_t* count) {
     if (*list == NULL) {
+        *count = 0;
         return NULL;
     }
     NODE_t *node = *list;
@@ -135,10 +135,8 @@ double* ll_export(NODE_t **list, int* count) {
         values[i] = node->d;
         NODE_t *temp = node;
         node = node->next;
-        free(temp);
         i++;
     }
-    *list = NULL;
     return values;
 }
 
