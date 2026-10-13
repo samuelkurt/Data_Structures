@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <MATH.h>
+#include <math.h>
 
 #include "list.h"
 
@@ -56,7 +56,7 @@ int main(void) {
     ll_push(&head, 10.5);
     ll_push(&head, 30);
     ll_push(&head, 99);
-    printf("Deleted: %p\n", ll_del_num(&head, 1));
+    ll_del_num(&head, 1);
     printf("Popped: %.2f\n", ll_pop(&head));
     printf("Popped: %.2f\n", ll_pop(&head));
     printf("Popped: %.2f\n", ll_pop(&head));
@@ -74,6 +74,7 @@ int main(void) {
         for (int i = 0; i < length; i++) {
             printf("%.2f ", exported_values[i]);
         }
+        printf("\nLength:%i\n", length);
         printf("\n");
         free(exported_values);
     } else {
