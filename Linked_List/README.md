@@ -17,7 +17,7 @@ gcc -std=c99 -O2 main.c list.c -o ll
 ./ll
 ```
 
-`CMakeLists.txt` is included as well (it requires CMake 4.3 or newer).
+`CMakeLists.txt` is included as well (it requires CMake 3.28.3 or newer).
 
 ## Functions
 
