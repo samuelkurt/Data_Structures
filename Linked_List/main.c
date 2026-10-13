@@ -82,13 +82,13 @@ int main(void) {
     ll_push(&head, 30);
     ll_push(&head, 99);
     print_list(&head);
-    NODE_t *found = ll_find_num(&head, 10.5);
+    NODE_t *found = ll_find_num(head, 10.5);
     if (found != NULL) {
         printf("Found: %.2f\n", found->d);
     } else {
         printf("Not found: 10.50\n");
     }
-    found = ll_find_num(&head, 55.5);
+    found = ll_find_num(head, 55.5);
     if (found != NULL) {
         printf("Found: %.2f\n", found->d);
     } else {
@@ -183,7 +183,7 @@ int main(void) {
     printf("find_middle (%u)\n", (unsigned)MAX_I);
     start = clock();
     for (uint32_t i = 0; i < MAX_I; i++) {
-        ll_find_num(&head, MAX_I / 2);
+        ll_find_num(head, MAX_I / 2);
     }
     end = clock();
     printf("time (s): %f\n", (double)(end - start) / CLOCKS_PER_SEC);
