@@ -76,7 +76,7 @@ NODE_t *ll_find_num(NODE_t **list, const double d) {
         prev = node;
         node = node->next;
     }
-    return prev;
+    return node;
 }
 
 NODE_t *ll_del_num(NODE_t **list, const int d) {
@@ -100,7 +100,6 @@ NODE_t *ll_del_num(NODE_t **list, const int d) {
         prev->next = node->next;
     }
     free(node);
-    return node;
 }
 
 NODE_t *ll_clear(NODE_t **list) {
@@ -117,17 +116,17 @@ NODE_t *ll_clear(NODE_t **list) {
     return NULL;
 }
 
-double* ll_export(NODE_t **list) {
+double* ll_export(NODE_t **list, int* count) {
     if (*list == NULL) {
         return NULL;
     }
     NODE_t *node = *list;
-    int count = 0;
+    *count = 0;
     while (node != NULL) {
         node = node->next;
-        count++;
+        *count++;
     }
-    double *values = (double *)malloc(count * sizeof(double));
+    double *values = malloc(*count * sizeof(double));
     if (values == NULL) {
         return NULL;
     }
@@ -141,7 +140,6 @@ double* ll_export(NODE_t **list) {
         i++;
     }
     *list = NULL;
-
     return values;
 }
 

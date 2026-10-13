@@ -56,7 +56,7 @@ int main(void) {
     ll_push(&head, 10.5);
     ll_push(&head, 30);
     ll_push(&head, 99);
-    printf("Popped: %p\n", ll_del_num(&head, 1));
+    printf("Deleted: %p\n", ll_del_num(&head, 1));
     printf("Popped: %.2f\n", ll_pop(&head));
     printf("Popped: %.2f\n", ll_pop(&head));
     printf("Popped: %.2f\n", ll_pop(&head));
@@ -67,10 +67,11 @@ int main(void) {
     ll_push(&head, 30.5);
     ll_push(&head, 40.5);
 
-    double *exported_values = ll_export(&head);
+    int length = 0;
+    double *exported_values = ll_export(&head, &length);
     if (exported_values != NULL) {
         printf("Exported values: ");
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < length; i++) {
             printf("%.2f ", exported_values[i]);
         }
         printf("\n");

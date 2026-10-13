@@ -13,6 +13,6 @@ double ll_pop_end(NODE_t **list);
 NODE_t *ll_find_num(NODE_t **list, const double d);
 NODE_t *ll_del_num(NODE_t **list, const int d);
 NODE_t *ll_clear(NODE_t **list);
-double* ll_export(NODE_t **list);
+double* ll_export(NODE_t **list, int* count);
 
 #endif
