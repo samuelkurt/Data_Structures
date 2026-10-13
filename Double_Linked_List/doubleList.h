@@ -4,6 +4,7 @@
 typedef struct NODE_t {
     double d;
     struct NODE_t *next;
+    struct NODE_t *past;
 } NODE_t;
 
 void    ll_push(NODE_t **head, double value);

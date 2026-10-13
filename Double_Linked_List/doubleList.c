@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
-#include "list.h"
+#include "doubleList.h"
 
 #include <math.h>
 
@@ -13,6 +13,11 @@ void ll_push(NODE_t **list, double a) {
     }
     node->d = a;
     node->next = *list;
+    node->past = NULL;
+
+    if (*list != NULL) {
+        (*list)->past = node;
+    }
     *list = node;
 }
 

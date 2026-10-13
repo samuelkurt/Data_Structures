@@ -1,4 +1,10 @@
-#debug folders
-cmake-build-debug
-.idea
+# Build directories
+cmake-build-*/
+build/
+
+# IDE
+.idea/
+.vscode/
+
+# OS files
 .DS_Store

@@ -3,38 +3,35 @@
 #include <time.h>
 #include <MATH.h>
 
-#include "list.h"
+#include "doubleList.h"
 
 int main(void) {
     NODE_t *head = NULL;
-
-    printf("=== Test 1: Empty list ===\n");
-    printf("head = %p\n", (void *)head);
 
     printf("\n=== Test 2: Push values ===\n");
 
     ll_push(&head, 10.5);
     printf("Pushed 10.5\n");
-
     ll_push(&head, 20.5);
     printf("Pushed 20.5\n");
-
     ll_push(&head, 30.5);
     printf("Pushed 30.5\n");
-
     ll_push(&head, 40.5);
     printf("Pushed 40.5\n");
-
-    printf("head = %p\n", (void *)head);
+    printf("head = %p\n", (void *)head->next);
+    printf("tail = %p\n", (void *)head->past);
 
     printf("\n=== Test 3: Pop values ===\n");
 
-    printf("Popped: %.2f\n", ll_pop(&head));
-    printf("Popped: %.2f\n", ll_pop(&head));
-    printf("Popped: %.2f\n", ll_pop(&head));
-    printf("Popped: %.2f\n", ll_pop(&head));
+    printf("Backward traversal:\n");
+    while (head->past != NULL) {
+        printf("%f\n", head->past->d);
+        head->past = head->past->past;
+    }
+    return 0;
+}
 
-    printf("\n=== Test 4: Empty List ===\n");
+   /* printf("\n=== Test 4: Empty List ===\n");
     printf("Popped: %.2f\n", ll_pop(&head));
     printf("head = %p\n", (void *)head);
 
@@ -169,3 +166,4 @@ int main(void) {
     printf("time (s): %f\n", (double)(end - start) / CLOCKS_PER_SEC);
     return 0;
 }
+*/
