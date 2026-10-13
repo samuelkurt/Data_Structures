@@ -64,18 +64,18 @@ double ll_pop_end(NODE_t **list) {
     return value;
 }
 
-NODE_t *ll_find_num(NODE_t **list, double d) {
-    if (*list == NULL) {
+NODE_t *ll_find_num(NODE_t *list, double d) {
+    if (list == NULL) {
         return NULL;
     }
-    NODE_t *node = *list;
+    NODE_t *node = &*list;
     while (node != NULL && node->d != d) {
         node = node->next;
     }
     return node;
 }
 
-int ll_del_num(NODE_t **list, uint32_t d) {
+int ll_del_index(NODE_t **list, uint32_t d) {
     if (*list == NULL) {
         return -1;
     }

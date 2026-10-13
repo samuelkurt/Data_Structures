@@ -98,19 +98,19 @@ int main(void) {
     printf("Popped: %.2f\n", ll_pop(&head));
 
     printf("\nTest 7: ll_del_num\n");
-    printf("Deleted: %d\n", ll_del_num(&head, 0));
+    printf("Deleted: %d\n", ll_del_index(&head, 0));
     ll_push(&head, 10.5);
     ll_push(&head, 30);
     ll_push(&head, 99);
     ll_push(&head, 5.5);
     print_list(&head);
-    printf("Deleted at 1: %d\n", ll_del_num(&head, 1));
+    printf("Deleted at 1: %d\n", ll_del_index(&head, 1));
     print_list(&head);
-    printf("Deleted at 0: %d\n", ll_del_num(&head, 0));
+    printf("Deleted at 0: %d\n", ll_del_index(&head, 0));
     print_list(&head);
-    printf("Deleted at 7: %d\n", ll_del_num(&head, 7));
+    printf("Deleted at 7: %d\n", ll_del_index(&head, 7));
     print_list(&head);
-    printf("Deleted at 1: %d\n", ll_del_num(&head, 1));
+    printf("Deleted at 1: %d\n", ll_del_index(&head, 1));
     print_list(&head);
     ll_clear(&head);
 
@@ -191,7 +191,7 @@ int main(void) {
     printf("del_middle (%u)\n", (unsigned)MAX_I);
     start = clock();
     for (uint32_t i = 0; i < MAX_I; i++) {
-        ll_del_num(&head, (MAX_I - i) / 2);
+        ll_del_index(&head, (MAX_I - i) / 2);
     }
     end = clock();
     printf("time (s): %f\n", (double)(end - start) / CLOCKS_PER_SEC);
