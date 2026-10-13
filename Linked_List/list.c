@@ -125,6 +125,7 @@ double* ll_export(NODE_t **list, uint32_t* count) {
     }
     double *values = malloc(*count * sizeof(double));
     if (values == NULL) {
+        *count = 0;
         return NULL;
     }
     node = *list;
@@ -136,4 +137,3 @@ double* ll_export(NODE_t **list, uint32_t* count) {
     }
     return values;
 }
-
