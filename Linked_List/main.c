@@ -6,7 +6,7 @@
 
 static void print_list(NODE_t **head) {
     uint32_t length = 0;
-    double *values = ll_export(head, &length);
+    double *values = ll_export(*head, &length);
     printf("List: [");
     for (uint32_t i = 0; i < length; i++) {
         if (i > 0) {
@@ -119,7 +119,7 @@ int main(void) {
     ll_push(&head, 40.5);
 
     uint32_t length = 0;
-    double *exported_values = ll_export(&head, &length);
+    double *exported_values = ll_export(head, &length);
     if (exported_values != NULL) {
         printf("Exported values: ");
         for (uint32_t i = 0; i < length; i++) {

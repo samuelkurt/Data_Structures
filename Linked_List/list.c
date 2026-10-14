@@ -112,12 +112,12 @@ void ll_clear(NODE_t **list) {
     *list = NULL;
 }
 
-double* ll_export(NODE_t **list, uint32_t* count) {
-    if (*list == NULL) {
+double* ll_export(NODE_t *list, uint32_t* count) {
+    if (list == NULL) {
         *count = 0;
         return NULL;
     }
-    NODE_t *node = *list;
+    NODE_t *node = list;
     *count = 0;
     while (node != NULL) {
         node = node->next;
@@ -128,7 +128,7 @@ double* ll_export(NODE_t **list, uint32_t* count) {
         *count = 0;
         return NULL;
     }
-    node = *list;
+    node = list;
     uint32_t i = 0;
     while (node != NULL) {
         values[i] = node->d;
