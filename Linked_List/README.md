@@ -29,7 +29,7 @@ gcc -std=c99 -O2 main.c list.c -o ll
 | `ll_pop_end(&head)` | Remove the last element | its value, `NAN` if the list is empty |
 | `ll_find_num(head, v)` | Search for the first node with value `v` | pointer to it, `NULL` if not found |
 | `ll_del_index(&head, i)` | Remove the element at index `i` | `0` ok, `-1` list empty, `-2` index out of range |
-| `ll_export(&head, &count)` | Copy all values into a new array | the array (caller must `free` it), `NULL` if empty |
+| `ll_export(head, &count)` | Copy all values into a new array | the array (caller must `free` it), `NULL` if empty |
 | `ll_clear(&head)` | Free all nodes, `head` becomes `NULL` | nothing |
 
 The list only holds numbers, so `NAN` is never a valid element and can safely
