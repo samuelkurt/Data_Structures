@@ -15,6 +15,12 @@ void printBinary(uint16_t value) {
     printf("\n");
 }
 
+void printA(void) {
+    printf("A  Hex: %04X\n", (unsigned int)A);
+    printf("   Bits: ");
+    printBinary(A);
+}
+
 int main(void) {
     unsigned int hexValue;
     int temp = 0;
@@ -22,14 +28,13 @@ int main(void) {
     int bit = 0;
 
     while (state != 0) {
-        state = 0;
         printf("========MENU========\n");
         printf("A:\n");
-        printf("HEX: %X\n", A);
+        printf("HEX: %04X\n", (unsigned int)A);
         printf("Binary: ");
         printBinary(A);
         printf("B:\n");
-        printf("HEX: %X\n", B);
+        printf("HEX: %04X\n", (unsigned int)B);
         printf("Binary: ");
         printBinary(B);
         printf("1)  A eingeben (Hex)\n");
@@ -45,13 +50,25 @@ int main(void) {
         printf("11)  Ein Bit in A löschen\n");
         printf("12)  Ein Bit in A umschalten\n");
         printf("13)  Ein Bit in A prüfen\n");
-        scanf("%i", &state);
+        printf("0)  Programm beenden\n");
+        if (scanf("%i", &state) != 1) {
+            printf("Ungueltige Eingabe!\n");
+            int c;
+            while ((c = getchar()) != '\n' && c != EOF) {}
+            continue;
+        }
+
+        if (state < 0 || state > 13) {
+            printf("Ungueltiger Menuepunkt!\n");
+            continue;
+        }
         if (state == 1) {
             temp = 0;
             while (temp == 0) {
                 printf("Geben sie einen gueltigen HEX Wert fuer A ein: ");
                 if (scanf("%x", &hexValue) == 1 && hexValue <= 0xFFFF) {
                     A = (uint16_t)hexValue;
+                    printA();
                     temp = 1;
                 } else {
                     printf("Ungueltige Eingabe!\n");
@@ -77,22 +94,28 @@ int main(void) {
         }
         if (state == 3) {
             A = A + B;
+            printA();
         }
         if (state == 4) {
             A = A & B;
+            printA();
         }
         if (state == 5) {
             A = A | B;
+            printA();
         }
         if (state == 6) {
             A = A ^ B;
+            printA();
         }
         if (state == 7) {
             A = (uint16_t)~A;
+            printA();
         }
         if (state == 8) {
             if (B < 16) {
                 A = A << B;
+                printA();
             }
             else {
                 printf("B zu groß\n");
@@ -102,6 +125,7 @@ int main(void) {
         if (state == 9) {
             if (B < 16) {
                 A = A >> B;
+                printA();
             }
             else {
                 printf("B zu groß\n");
@@ -111,6 +135,7 @@ int main(void) {
             printf("Welche Bitnummer soll auf 1 gesetzt werden (0-15)? ");
             if (scanf("%d", &bit) == 1 && bit >= 0 && bit <= 15) {
                 A = A | (uint16_t)(1u << bit);
+                printA();
             }
             else {
                 printf("Ungueltige Bitnummer!\n");
@@ -120,18 +145,24 @@ int main(void) {
             printf("Welche Bitnummer soll auf 0 gesetzt werden (0-15)? ");
             if (scanf("%d", &bit) == 1 && bit >= 0 && bit <= 15) {
                 A = (uint16_t)(A & ~(1u << bit));
+                printA();
             }
             else {
                 printf("Ungueltige Bitnummer!\n");
+                int c;
+                while ((c = getchar()) != '\n' && c != EOF) {}
             }
         }
         if (state == 12) {
             printf("Welche Bitnummer soll umgeschaltet werden (0-15)? ");
             if (scanf("%d", &bit) == 1 && bit >= 0 && bit <= 15) {
                 A = A ^ (uint16_t)(1u << bit);
+                printA();
             }
             else {
                 printf("Ungueltige Bitnummer!\n");
+                int c;
+                while ((c = getchar()) != '\n' && c != EOF) {}
             }
         }
         if (state == 13) {
@@ -146,6 +177,8 @@ int main(void) {
             }
             else {
                 printf("Ungueltige Bitnummer!\n");
+                int c;
+                while ((c = getchar()) != '\n' && c != EOF) {}
             }
         }
     }
