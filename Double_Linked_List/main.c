@@ -196,5 +196,6 @@ int main(void) {
     printf("time (s): %f\n", (double)(end - start) / CLOCKS_PER_SEC);
 
     dll_clear(&head, &tail);
+
     return 0;
 }
