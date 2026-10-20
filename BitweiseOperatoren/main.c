@@ -19,6 +19,7 @@ int main(void) {
     unsigned int hexValue;
     int temp = 0;
     int state = -1;
+    int bit = 0;
 
     while (state != 0) {
         state = 0;
@@ -38,6 +39,12 @@ int main(void) {
         printf("5)  A = A ODER B\n");
         printf("6)  A = A XOR B\n");
         printf("7)  A = NICHT A\n");
+        printf("8)  A um B Stellen nach links schieben\n");
+        printf("9)  A um B Stellen nach rechts schieben\n");
+        printf("10)  Ein Bit in A setzen\n");
+        printf("11)  Ein Bit in A löschen\n");
+        printf("12)  Ein Bit in A umschalten\n");
+        printf("13)  Ein Bit in A prüfen\n");
         scanf("%i", &state);
         if (state == 1) {
             temp = 0;
@@ -82,6 +89,64 @@ int main(void) {
         }
         if (state == 7) {
             A = (uint16_t)~A;
+        }
+        if (state == 8) {
+            if (B < 16) {
+                A = A << B;
+            }
+            else {
+                printf("B zu groß\n");
+            }
+
+        }
+        if (state == 9) {
+            if (B < 16) {
+                A = A >> B;
+            }
+            else {
+                printf("B zu groß\n");
+            }
+        }
+        if (state == 10) {
+            printf("Welche Bitnummer soll auf 1 gesetzt werden (0-15)? ");
+            if (scanf("%d", &bit) == 1 && bit >= 0 && bit <= 15) {
+                A = A | (uint16_t)(1u << bit);
+            }
+            else {
+                printf("Ungueltige Bitnummer!\n");
+            }
+        }
+        if (state == 11) {
+            printf("Welche Bitnummer soll auf 0 gesetzt werden (0-15)? ");
+            if (scanf("%d", &bit) == 1 && bit >= 0 && bit <= 15) {
+                A = (uint16_t)(A & ~(1u << bit));
+            }
+            else {
+                printf("Ungueltige Bitnummer!\n");
+            }
+        }
+        if (state == 12) {
+            printf("Welche Bitnummer soll umgeschaltet werden (0-15)? ");
+            if (scanf("%d", &bit) == 1 && bit >= 0 && bit <= 15) {
+                A = A ^ (uint16_t)(1u << bit);
+            }
+            else {
+                printf("Ungueltige Bitnummer!\n");
+            }
+        }
+        if (state == 13) {
+            printf("Welche Bitnummer soll geprueft werden (0-15)? ");
+            if (scanf("%d", &bit) == 1 && bit >= 0 && bit <= 15) {
+                if (A & (uint16_t)(1u << bit)) {
+                    printf("Bit %d ist 1.\n", bit);
+                }
+                else {
+                    printf("Bit %d ist 0.\n", bit);
+                }
+            }
+            else {
+                printf("Ungueltige Bitnummer!\n");
+            }
         }
     }
 
