@@ -139,6 +139,8 @@ int main(void) {
             }
             else {
                 printf("Ungueltige Bitnummer!\n");
+                int c;
+                while ((c = getchar()) != '\n' && c != EOF) {}
             }
         }
         if (state == 11) {
