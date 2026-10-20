@@ -1,19 +1,21 @@
-#ifndef LIST_H
-#define LIST_H
+#ifndef DOUBLELIST_H
+#define DOUBLELIST_H
 
-typedef struct NODE_t {
+#include <stdint.h>
+
+typedef struct DNODE_t {
     double d;
-    struct NODE_t *next;
-    struct NODE_t *past;
-} NODE_t;
+    struct DNODE_t *next;
+    struct DNODE_t *past;
+} DNODE_t;
 
-void    ll_push(NODE_t **head, double value);
-double  ll_pop(NODE_t **head);
-void    ll_push_end(NODE_t **head, double value);
-double ll_pop_end(NODE_t **list);
-NODE_t *ll_find_num(NODE_t **list, const double d);
-NODE_t *ll_del_num(NODE_t **list, const int d);
-NODE_t *ll_clear(NODE_t **list);
-double* ll_export(NODE_t **list);
+void    dll_push(DNODE_t **head, DNODE_t **tail, double value);
+double  dll_pop(DNODE_t **head, DNODE_t **tail);
+void    dll_push_end(DNODE_t **head, DNODE_t **tail, double value);
+double dll_pop_end(DNODE_t **list, DNODE_t **tail);
+DNODE_t *dll_find_num(DNODE_t *list, double d);
+int dll_del_index(DNODE_t **list, DNODE_t **tail, uint32_t d);
+void dll_clear(DNODE_t **list, DNODE_t **tail);
+double* dll_export(DNODE_t *list, uint32_t* count);
 
 #endif

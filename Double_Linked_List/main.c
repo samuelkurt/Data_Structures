@@ -1,169 +1,200 @@
+#include "doubleList.h"
+#include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
-#include <MATH.h>
 
-#include "doubleList.h"
 
-int main(void) {
-    NODE_t *head = NULL;
-
-    printf("\n=== Test 2: Push values ===\n");
-
-    ll_push(&head, 10.5);
-    printf("Pushed 10.5\n");
-    ll_push(&head, 20.5);
-    printf("Pushed 20.5\n");
-    ll_push(&head, 30.5);
-    printf("Pushed 30.5\n");
-    ll_push(&head, 40.5);
-    printf("Pushed 40.5\n");
-    printf("head = %p\n", (void *)head->next);
-    printf("tail = %p\n", (void *)head->past);
-
-    printf("\n=== Test 3: Pop values ===\n");
-
-    printf("Backward traversal:\n");
-    while (head->past != NULL) {
-        printf("%f\n", head->past->d);
-        head->past = head->past->past;
+static void print_list(DNODE_t **head) {
+    uint32_t length = 0;
+    double *values = dll_export(*head, &length);
+    printf("List: [");
+    for (uint32_t i = 0; i < length; i++) {
+        if (i > 0) {
+            printf(", ");
+        }
+        printf("%.2f", values[i]);
     }
-    return 0;
+    printf("]\n");
+    free(values);
 }
 
-   /* printf("\n=== Test 4: Empty List ===\n");
-    printf("Popped: %.2f\n", ll_pop(&head));
-    printf("head = %p\n", (void *)head);
+int main(void) {
+    DNODE_t *head = NULL;
+    DNODE_t *tail = NULL;
 
-    printf("\n=== Test 5: pop_at_end ===\n");
-    ll_push(&head, 30.5);
-    ll_push(&head, 30);
-    ll_push(&head, 99);
-    printf("Popped: %f\n", ll_pop_end(&head));
-    printf("Popped: %f\n", ll_pop_end(&head));
-    printf("Popped: %f\n", ll_pop_end(&head));
-    printf("Popped: %f\n", ll_pop_end(&head));
+    printf("\nTest 1: Push values\n");
 
-    printf("\n=== Test 6: ll_find_num ===\n");
-    ll_push(&head, 10.5);
-    ll_push(&head, 30);
-    ll_push(&head, 99);
-    printf("Popped: %p\n", ll_find_num(&head, 10.5));
-    ll_clear(&head);
-    printf("Popped: %.2f\n", ll_pop(&head));
+    dll_push(&head, &tail, 10.5);
+    printf("Pushed 10.5\n");
+    print_list(&head);
 
-    printf("\n=== Test 7: ll_del_num ===\n");
-    ll_push(&head, 10.5);
-    ll_push(&head, 30);
-    ll_push(&head, 99);
-    printf("Popped: %p\n", ll_del_num(&head, 1));
-    printf("Popped: %.2f\n", ll_pop(&head));
-    printf("Popped: %.2f\n", ll_pop(&head));
-    printf("Popped: %.2f\n", ll_pop(&head));
+    dll_push(&head, &tail, 20.5);
+    printf("Pushed 20.5\n");
+    print_list(&head);
 
-    printf("\n=== Test 8: ll_export ===\n");
-    ll_push(&head, 10.5);
-    ll_push(&head, 20.5);
-    ll_push(&head, 30.5);
-    ll_push(&head, 40.5);
+    dll_push(&head, &tail, 30.5);
+    printf("Pushed 30.5\n");
+    print_list(&head);
 
-    double *exported_values = ll_export(&head);
+    dll_push(&head, &tail, 40.5);
+    printf("Pushed 40.5\n");
+    print_list(&head);
+
+    printf("\nTest 2: Pop values\n");
+
+    printf("Popped: %.2f\n", dll_pop(&head, &tail));
+    print_list(&head);
+    printf("Popped: %.2f\n", dll_pop(&head, &tail));
+    print_list(&head);
+    printf("Popped: %.2f\n", dll_pop(&head, &tail));
+    print_list(&head);
+    printf("Popped: %.2f\n", dll_pop(&head, &tail));
+    print_list(&head);
+
+    printf("\nTest 3: Empty List\n");
+    printf("Popped: %.2f\n", dll_pop(&head, &tail));
+    printf("Popped at end: %.2f\n", dll_pop_end(&head, &tail));
+    printf("head = %p, tail = %p\n", (void *)head, (void *)tail);
+
+    printf("\nTest 4: push_end\n");
+    dll_push_end(&head, &tail, 10.5);
+    printf("Pushed at end 10.5\n");
+    print_list(&head);
+    dll_push_end(&head, &tail, 20.5);
+    printf("Pushed at end 20.5\n");
+    print_list(&head);
+    dll_push_end(&head, &tail, 30.5);
+    printf("Pushed at end 30.5\n");
+    print_list(&head);
+
+    printf("\nTest 5: pop_at_end\n");
+    printf("Popped: %.2f\n", dll_pop_end(&head, &tail));
+    print_list(&head);
+    printf("Popped: %.2f\n", dll_pop_end(&head, &tail));
+    print_list(&head);
+    printf("Popped: %.2f\n", dll_pop_end(&head, &tail));
+    print_list(&head);
+    printf("Popped: %.2f\n", dll_pop_end(&head, &tail));
+
+    printf("\nTest 6: dll_find_num\n");
+    dll_push(&head, &tail, 10.5);
+    dll_push(&head, &tail, 30);
+    dll_push(&head, &tail, 99);
+    print_list(&head);
+    DNODE_t *found = dll_find_num(head, 10.5);
+    if (found != NULL) {
+        printf("Found: %.2f\n", found->d);
+    } else {
+        printf("Not found: 10.50\n");
+    }
+    found = dll_find_num(head, 55.5);
+    if (found != NULL) {
+        printf("Found: %.2f\n", found->d);
+    } else {
+        printf("Not found: 55.50\n");
+    }
+    dll_clear(&head, &tail);
+    printf("Popped: %.2f\n", dll_pop(&head, &tail));
+
+    printf("\nTest 7: dll_del_index\n");
+    printf("Deleted: %d\n", dll_del_index(&head, &tail, 0));
+    dll_push(&head, &tail, 10.5);
+    dll_push(&head, &tail, 30);
+    dll_push(&head, &tail, 99);
+    dll_push(&head, &tail, 5.5);
+    print_list(&head);
+    printf("Deleted at 1: %d\n", dll_del_index(&head, &tail, 1));
+    print_list(&head);
+    printf("Deleted at 0: %d\n", dll_del_index(&head, &tail, 0));
+    print_list(&head);
+    printf("Deleted at 7: %d\n", dll_del_index(&head, &tail, 7));
+    print_list(&head);
+    printf("Deleted at 1: %d\n", dll_del_index(&head, &tail, 1));
+    print_list(&head);
+    dll_clear(&head, &tail);
+
+    printf("\nTest 8: dll_export\n");
+    dll_push(&head, &tail, 10.5);
+    dll_push(&head, &tail, 20.5);
+    dll_push(&head, &tail, 30.5);
+    dll_push(&head, &tail, 40.5);
+
+    uint32_t length = 0;
+    double *exported_values = dll_export(head, &length);
     if (exported_values != NULL) {
         printf("Exported values: ");
-        for (int i = 0; i < 4; i++) {
+        for (uint32_t i = 0; i < length; i++) {
             printf("%.2f ", exported_values[i]);
         }
-        printf("\n");
+        printf("\nLength: %u\n", (unsigned)length);
         free(exported_values);
     } else {
         printf("Failed to export values.\n");
     }
+    print_list(&head);
 
-    printf("\n=== Test 9: Benchmakr ===\n");
-    printf("push\n");
-    long start = clock();
-    int const MAX_I = 100000;
-    for (int i = 0; i < MAX_I; i++) {
-        ll_push(&head, i);
+    printf("\nTest 9: dll_clear\n");
+    dll_clear(&head, &tail);
+    print_list(&head);
+    printf("head = %p, tail = %p\n", (void *)head, (void *)tail);
+
+    printf("\nTest 10: Benchmark\n");
+    uint32_t const MAX_I = 40000;
+
+    printf("push (%u)\n", (unsigned)MAX_I);
+    clock_t start = clock();
+    for (uint32_t i = 0; i < MAX_I; i++) {
+        dll_push(&head, &tail, i);
     }
-    long end = clock();
+    clock_t end = clock();
     printf("time (s): %f\n", (double)(end - start) / CLOCKS_PER_SEC);
 
-    printf("pop\n");
+    printf("pop (%u)\n", (unsigned)MAX_I);
     start = clock();
-    for (int i = 0; i < MAX_I; i++) {
-        ll_pop(&head);
+    for (uint32_t i = 0; i < MAX_I; i++) {
+        dll_pop(&head, &tail);
     }
     end = clock();
     printf("time (s): %f\n", (double)(end - start) / CLOCKS_PER_SEC);
 
-    printf("push_end\n");
+    printf("push_end (%u)\n", (unsigned)MAX_I);
     start = clock();
-    for (int i = 0; i < MAX_I; i++) {
-        ll_push_end(&head, i);
+    for (uint32_t i = 0; i < MAX_I; i++) {
+        dll_push_end(&head, &tail, i);
     }
     end = clock();
     printf("time (s): %f\n", (double)(end - start) / CLOCKS_PER_SEC);
 
-    printf("pop_end\n");
+    printf("pop_end (%u)\n", (unsigned)MAX_I);
     start = clock();
-    for (int i = 0; i < MAX_I; i++) {
-        ll_pop_end(&head);
-    }
-    end = clock();
-    printf("time (s): %f\n", (double)(end - start) / CLOCKS_PER_SEC);
-
-    printf("repopulating, please wait...\n");
-
-    for (int i = 0; i < MAX_I; i++) {
-        ll_push(&head, i);
-    }
-
-    printf("pop_end\n");
-    start = clock();
-    for (int i = 0; i < MAX_I; i++) {
-        ll_pop_end(&head);
+    for (uint32_t i = 0; i < MAX_I; i++) {
+        dll_pop_end(&head, &tail);
     }
     end = clock();
     printf("time (s): %f\n", (double)(end - start) / CLOCKS_PER_SEC);
 
     printf("repopulating, please wait...\n");
 
-    for (int i = 0; i < MAX_I; i++) {
-        ll_push(&head, i);
+    for (uint32_t i = 0; i < MAX_I; i++) {
+        dll_push(&head, &tail, i);
     }
 
-    printf("find_random\n");
+    printf("find_middle (%u)\n", (unsigned)MAX_I);
     start = clock();
-    srand(time(NULL));
-    for (int i = 0; i < MAX_I; i++) {
-        int n = 0;
-        NODE_t *node = head;
-        while (node != NULL) {
-            n++;
-            node = node->next;
-        }
-        int random_index = rand() % n;
-        ll_find_num(&head, random_index);
+    for (uint32_t i = 0; i < MAX_I; i++) {
+        dll_find_num(head, MAX_I / 2);
     }
     end = clock();
     printf("time (s): %f\n", (double)(end - start) / CLOCKS_PER_SEC);
 
-    printf("del_random\n");
+    printf("del_middle (%u)\n", (unsigned)MAX_I);
     start = clock();
-    srand(time(NULL));
-    for (int i = 0; i < MAX_I; i++) {
-        int n = 0;
-        NODE_t *node = head;
-        while (node != NULL) {
-            n++;
-            node = node->next;
-        }
-        int random_index = rand() % n;
-        ll_del_num(&head, random_index);
+    for (uint32_t i = 0; i < MAX_I; i++) {
+        dll_del_index(&head, &tail, (MAX_I - i) / 2);
     }
     end = clock();
     printf("time (s): %f\n", (double)(end - start) / CLOCKS_PER_SEC);
+
+    dll_clear(&head, &tail);
     return 0;
 }
-*/
