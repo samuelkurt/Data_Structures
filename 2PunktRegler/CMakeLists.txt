@@ -3,4 +3,5 @@ project(2PunktRegler C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(2PunktRegler main.c)
+add_executable(2PunktRegler temperatur.c heizung.c
+        heizung.c)
