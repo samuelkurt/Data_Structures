@@ -69,26 +69,27 @@ void *temperatur_thread(void *arg) {
     return NULL;
 }
 
-static void temperatur_zeile(const TEMPERATUR_t *temperatur) {
+static void temperatur_zeile(const TEMPERATUR_t *temperatur, FILE *datei) {
     char zeile[128];
-    snprintf(zeile, sizeof(zeile), "%s;%.1f;%.2f;%.3f;%.3f",
-            temperatur->regler, temperatur->zeit, temperatur->soll, temperatur->ist, temperatur->stell);
+    snprintf(zeile, sizeof(zeile), "%s;%.1f;%.2f;%.3f;%u;%.3f",
+            temperatur->regler, temperatur->zeit, temperatur->soll, temperatur->ist,
+            (unsigned) temperatur->an, temperatur->stell);
     for (char *zeichen = zeile; *zeichen != '\0'; zeichen++) {
         if (*zeichen == '.') {
             *zeichen = ',';
         }
     }
-    printf("%s\n", zeile);
+    fprintf(datei, "%s\n", zeile);
 }
 
-void temperatur_ausgabe(const SPEICHER_t *speicher) {
+void temperatur_ausgabe(const SPEICHER_t *speicher, FILE *datei) {
     if (speicher->liste) {
         for (const TEMPERATUR_t *aktuell = speicher->kopf; aktuell != NULL; aktuell = aktuell->next) {
-            temperatur_zeile(aktuell);
+            temperatur_zeile(aktuell, datei);
         }
     } else {
         for (uint32_t i = 0; i < speicher->anzahl; i++) {
-            temperatur_zeile(&speicher->feld[i]);
+            temperatur_zeile(&speicher->feld[i], datei);
         }
     }
 }

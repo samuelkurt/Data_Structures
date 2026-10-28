@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdint.h>
+#include <string.h>
 #include <pthread.h>
 #include "temperatur.h"
 
@@ -47,6 +48,7 @@ static void *heizung_thread(void *arg) {
             if (stell < 0.0) {
                 stell = 0.0;
             }
+            an = stell > 0.0;
         } else {
             if (ist < SOLL - HYSTERESE) {
                 an = 1;
@@ -55,7 +57,7 @@ static void *heizung_thread(void *arg) {
             }
             stell = an;
         }
-        TEMPERATUR_t messwert = {heizung->name, i * SCHRITTWEITE, SOLL, ist, stell, NULL};
+        TEMPERATUR_t messwert = {heizung->name, i * SCHRITTWEITE, SOLL, ist, an, stell, NULL};
         temperatur_senden(heizung->speicher, messwert);
         double leistung = stell * MAX_LEISTUNG;
         double verlust = WAERMEVERLUST * (ist - AUSSENTEMPERATUR);
@@ -65,28 +67,34 @@ static void *heizung_thread(void *arg) {
     return NULL;
 }
 
-int main(void) {
+int main(int argc, char *argv[]) {
     const char *namen[2] = {"2-Punkt", "PID"};
-    for (uint8_t liste = 0; liste < 2; liste++) {
-        if (liste) {
-            printf("\n# Version 2: einfach verkettete Liste\n");
-        } else {
-            printf("# Version 1: Feld\n");
+    uint8_t liste = 0;
+    if (argc > 1) {
+        if (strcmp(argv[1], "liste") == 0) {
+            liste = 1;
+        } else if (strcmp(argv[1], "feld") != 0) {
+            fprintf(stderr, "Aufruf: %s [feld|liste]\n", argv[0]);
+            return 1;
         }
-        printf("%s\n", CSV_KOPF);
-        for (uint8_t pid = 0; pid < 2; pid++) {
-            SPEICHER_t speicher;
-            HEIZUNG_t heizung = {&speicher, namen[pid], pid};
-            pthread_t heizung_id;
-            pthread_t temperatur_id;
-            temperatur_init(&speicher, liste);
-            pthread_create(&temperatur_id, NULL, temperatur_thread, &speicher);
-            pthread_create(&heizung_id, NULL, heizung_thread, &heizung);
-            pthread_join(heizung_id, NULL);
-            pthread_join(temperatur_id, NULL);
-            temperatur_ausgabe(&speicher);
-            temperatur_frei(&speicher);
-        }
+    }
+    printf("%s\n", CSV_KOPF);
+    for (uint8_t pid = 0; pid < 2; pid++) {
+        SPEICHER_t speicher;
+        HEIZUNG_t heizung = {&speicher, namen[pid], pid};
+        pthread_t heizung_id;
+        pthread_t temperatur_id;
+        temperatur_init(&speicher, liste);
+        pthread_create(&temperatur_id, NULL, temperatur_thread, &speicher);
+        pthread_create(&heizung_id, NULL, heizung_thread, &heizung);
+        pthread_join(heizung_id, NULL);
+        pthread_join(temperatur_id, NULL);
+        temperatur_ausgabe(&speicher, stdout);
+        temperatur_frei(&speicher);
+    }
+    if (fflush(stdout) != 0) {
+        perror("stdout");
+        return 1;
     }
     return 0;
 }
